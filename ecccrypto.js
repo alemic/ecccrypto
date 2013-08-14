@@ -140,7 +140,8 @@ ECCCrypto.prototype.generatePrivKey = function(curve) {
  */
 ECCCrypto.prototype.encrypt = function(message, exportHEX, pubKey) {
 	var exportHEX = exportHEX || false,
-		pubKey = pubKey || this.keys.pubKey,
+		hex = new HEX(),
+		pubKey = JSON.parse(hex.hexToString(pubKey)) || this.keys.pubKey,
 		ciphertext = sjcl.encrypt(pubKey.key, message),
 		json = JSON.stringify({ 'ciphertext': ciphertext, 'encrypted_key': pubKey.tag });
 	if (exportHEX) {
